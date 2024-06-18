@@ -28,7 +28,21 @@ class FileOrganizer:
         txt = open("folderspecs.txt","a") #modla alakalı
         txt.write(str(self.doDel)+str(self.doPart)+str(self.deleteTime)+"\n")
         txt.close
-
+    def updateFolderSettings(fIndex,doDel = None, doPart =None, dTime =None):
+        if doDel is None:
+            doDel = FileOrganizer.fOrgs[fIndex].doDel
+            pass
+        if doPart is None:
+            doPart = FileOrganizer.fOrgs[fIndex].doDel
+            pass
+        if dTime is None:
+            dtime = FileOrganizer.fOrgs[fIndex].deleteTime
+            pass
+        FileOrganizer.fOrgs[fIndex].doDel = doDel
+        FileOrganizer.fOrgs[fIndex].doDel = doPart
+        FileOrganizer.fOrgs[fIndex].doDel = dtime        
+        FileOrganizer.updateAllSaves()
+        pass
     def updateAllSaves():
         print("a")
         txt = open("folders.txt","w")
@@ -60,7 +74,16 @@ class FileOrganizer:
             if not os.path.exists(self.path + "/" + fileExtension):
                 os.makedirs(self.path+"/"+fileExtension)
             shutil.move(self.path + "/" + file, self.path + "/" + fileExtension + "/" + file)
-            
+    def deleteFolderfromSystem(fIndex):   
+        del FileOrganizer[fIndex]
+
+        j = 0
+        for i in FileOrganizer.fOrgs:
+            i.index = j
+            j+=1
+        
+        FileOrganizer.updateAllSaves()
+        pass   
     def deleteAfterDeterminedTime(self):
         if self.deleteTime == None:
             return

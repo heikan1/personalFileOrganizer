@@ -65,17 +65,40 @@ class Menu(object):
             case 0:
                 self.mainMenu()
             case 1:
+                fo.FileOrganizer.deleteFolderfromSystem(fIndex)
+                print("Successfully deleted")
                 #will add delete function later
                 pass
             case 2:
-
+                print(f"Current dtime is {fo.FileOrganizer.fOrgs[fIndex].deleteTime} days.")
+                new_d = self.__inputControl(input("What do you want to change with: "),100000,-1)
+                fo.FileOrganizer.updateFolderSettings(fIndex,dTime=new_d)
+                print("Chage has successfully made")
                 pass
             case 3:
+                print(f"Current doDel is {fo.FileOrganizer.fOrgs[fIndex].doDel} .")
+                new_d = self.__inputControl(input("What do you want to change with (1 is True, 0 is False): "),2,-1)
+                if(new_d == 1):
+                    new_d = True
+                else:
+                    new_d = False
+                fo.FileOrganizer.updateFolderSettings(fIndex,doDel=new_d)
+                print("Chage has successfully made")
                 pass
             case 4:
+                print(f"Current doPart is {fo.FileOrganizer.fOrgs[fIndex].doPart} .")
+                new_d = self.__inputControl(input("What do you want to change with (1 is True, 0 is False): "),2,-1)
+                if(new_d == 1):
+                    new_d = True
+                else:
+                    new_d = False
+                fo.FileOrganizer.updateFolderSettings(fIndex,doPart=new_d)
+                print("Chage has successfully made")
                 pass
             case _:
+                self.mainMenu()
                 pass
+        self.mainMenu()
         pass
     def __inputControl(self,menuSelection,upperlimit,lowerlimit):
         try:
