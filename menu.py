@@ -14,20 +14,20 @@ class Menu(object):
         while True:
             print("********************************************")
             for files in fo.FileOrganizer.fOrgs:
-                print(files)
+                print(files.path)
             print("********************************************")
             print("Options:")
             print("1) Add Folder    2)Edit Folder")
             print("3) Exit")
 
             self.menuSelection = input()
-            while(self.__inputControl(self.menuSelection)):
+            while(self.__inputControl(self.menuSelection,4,0)):
                 pass
             #print(type(self.menuSelection))
             if self.menuSelection == 1:
                 self.AddFolder()
             if self.menuSelection == 2:
-                pass
+                self.folderMenu()
             if self.menuSelection == 3:
                 break #break olacak bu da şu an döngü yok diye
             
@@ -36,19 +36,55 @@ class Menu(object):
         print(r"For example: C:\Users\metin\Downloads")
         path = input()
         folder = fo.FileOrganizer(path)
+        print("Folder has successfully added!")
 
 
     def folderMenu(self):
         #mainmenude seçilen folderın bilgilerini değiştirme, görme falan yeri, sistemden kaldırma ayarı falan
+        print("Please enter the index of a folder that you want to edit:")
+        print(f"Between {0} and {fo.FileOrganizer.fOrgs.__len__()-1}")
+        fIndex = self.__inputControl(input(),fo.FileOrganizer.fOrgs.__len__(),-1)
+
+        print("********************************************")
+        print("Folder:")
+        print(fo.FileOrganizer.fOrgs[fIndex].path)
+        print("Options:")
+        print("1) Delete from system")
+        print("2) Change delTime")
+        print("3) Change doDel")
+        print("4) Change doPart")
+        print("0) Turn back to main menu")
+        print("********************************************")
+        selection = self.__inputControl(input("Index of option: "),5,-1)
+
+        #dont forget that i have fIndex by now
+        #so i can just type all functions in this class???
+        #maybe i should not lol.
+        #uh even though i wont i need to pass the fIndex to the functions
+        match selection:
+            case 0:
+                self.mainMenu()
+            case 1:
+                #will add delete function later
+                pass
+            case 2:
+
+                pass
+            case 3:
+                pass
+            case 4:
+                pass
+            case _:
+                pass
         pass
-    def __inputControl(self,menuSelection):
+    def __inputControl(self,menuSelection,upperlimit,lowerlimit):
         try:
             self.menuSelection = int(menuSelection)
-            if (self.menuSelection < 4 and self.menuSelection > 0):
+            if (self.menuSelection < upperlimit and self.menuSelection > lowerlimit):
                 return False
             else:
                 print("Please enter a valid number")
-                self.__inputControl(input())
+                self.__inputControl(input(),upperlimit,lowerlimit)
         except:
             print("Please enter a valid number")
-            self.__inputControl(input())
+            self.__inputControl(input(),upperlimit,lowerlimit)
